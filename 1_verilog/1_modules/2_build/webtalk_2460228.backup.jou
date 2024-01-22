@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Thu Jan 18 21:09:30 2024
+# Process ID: 2460228
+# Current directory: /home/zab180/3700/1_verilog/1_modules/2_build
+# Command line: wbtcv -mode batch -source /home/zab180/3700/1_verilog/1_modules/2_build/xsim.dir/sim/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/zab180/3700/1_verilog/1_modules/2_build/webtalk.log
+# Journal file: /home/zab180/3700/1_verilog/1_modules/2_build/webtalk.jou
+#-----------------------------------------------------------
+source /home/zab180/3700/1_verilog/1_modules/2_build/xsim.dir/sim/webtalk/xsim_webtalk.tcl -notrace

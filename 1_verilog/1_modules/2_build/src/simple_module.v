@@ -16,7 +16,7 @@ module simple_module (
 		      output reg q
 		      );
 
-   initial q=0;
+   initial q = 0;
    
    always @(posedge clk) begin
       if (en)

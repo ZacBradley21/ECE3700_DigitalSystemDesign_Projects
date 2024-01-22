@@ -1,0 +1,13 @@
+#-----------------------------------------------------------
+# xsim v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Sun Jan 21 19:03:24 2024
+# Process ID: 3389624
+# Current directory: /home/zab180/3700/1_verilog/1_modules/2_build
+# Command line: xsim -mode tcl -source {xsim.dir/sim/xsim_script.tcl}
+# Log file: /home/zab180/3700/1_verilog/1_modules/2_build/xsim.log
+# Journal file: /home/zab180/3700/1_verilog/1_modules/2_build/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/sim/xsim_script.tcl
+run -all
