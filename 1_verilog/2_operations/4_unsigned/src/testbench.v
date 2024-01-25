@@ -25,8 +25,6 @@ module testbench ();
       b <= $random();
    end
 
-   
-
    // WRITE OUTPUT TO CONSOLE:
    integer fid;
    initial fid = $fopen("test_result.txt", "w");
@@ -52,5 +50,14 @@ module testbench ();
       end
    end
 
+   // ADDITIONAL TEST CASES FOR OVERFLOW
+   always @(posedge clk) begin
+      if (a + b < a || a + b < b) begin
+         $display("Overflow occurred on addition: a = %b, b = %b", a, b);
+      end
+      if (b > a) begin
+         $display("Overflow occurred on subtraction: a = %b, b = %b", a, b);
+      end
+   end
    
 endmodule // testbench
