@@ -5,7 +5,8 @@ module testbench ();
    // DECLARE SIGNALS
    reg clk;      // "reg" signals are  controlled
    reg [7:0] a;  // by the testbench
-   reg [7:0] b;  
+   reg [7:0] b;  // [7:0] means "8-bit vector"
+   wire [3:0] q; // wire for q
 
    integer clk_count = 0;   
    
@@ -25,7 +26,13 @@ module testbench ();
       b <= $random();
    end
 
-   
+   // Instantiate top module and connect ports
+   top_v DUT(
+      .clk(clk),
+      .load(1'b1),
+      .a(a),
+      .q(q)
+   );
 
    // WRITE OUTPUT TO CONSOLE:
    integer fid;
@@ -35,11 +42,13 @@ module testbench ();
       $write("clk:  %d", clk_count);      
       $write("\ta:  %b", a);
       $write("\tb:  %b", b);
+      $write("\tq:  %b", q); // report q in the log text
       $write("\n");
       
       $fwrite(fid,"clk:  %d", clk_count);      
       $fwrite(fid,"\ta:  %b", a);
       $fwrite(fid,"\tb:  %b", b);
+      $fwrite(fid,"\tq:  %b", q); // report q in the log text
       $fwrite(fid,"\n");
    end
 

@@ -2,8 +2,8 @@
 
 module add_bits
   (
-   input [7:0] 	    a,
-   output reg [3:0] q 
+   input [7:0] 	  a,
+   output reg [3:0] q
    );
 
    // Declare Loop Index
