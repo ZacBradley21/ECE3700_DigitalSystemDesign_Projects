@@ -1,13 +1,11 @@
 `timescale 1ns/1ps
-
 module testbench ();
    
    // DECLARE SIGNALS
-   reg clk;     
-   reg signed [2:0] a;  
-   reg        [3:0] b;  
-   reg        [4:0] c;
-   
+   reg clk;     // "reg" type signals are  controlled
+   reg signed [7:0] a;  // by the testbench
+   reg signed [7:0] b;  // by the testbench
+
    integer clk_count = 0;   
    
    // INITIAL SIGNAL CONFIGURATION:
@@ -15,20 +13,15 @@ module testbench ();
       clk = 0;      
       a   = 0;
       b   = 0;
-      c   = 0;
    end
 
    // GENERATE CLOCK:
    initial forever #10 clk = ~clk;
-
-   always @(a) begin
-      b = a;
-      c = b;
-   end
-
+   
    // CREATE STIMULI:
    always @(posedge clk) begin
-      a <= a + 1;
+      a <= $random();
+      b <= $random();
    end
 
    // WRITE OUTPUT TO CONSOLE:
@@ -37,15 +30,13 @@ module testbench ();
    
    always @(posedge clk) begin
       $write("clk:  %d", clk_count);      
-      $write("\ta:  %b(%d)", a,a);
-      $write("\tb:  %b(%d)", b,b);
-      $write("\tc:  %b(%d)", c,c);
+      $write("\ta:  %b", a);
+      $write("\tb:  %b", b);
       $write("\n");
       
       $fwrite(fid,"clk:  %d", clk_count);      
-      $fwrite(fid,"\ta:  %b(%d)", a,a);
-      $fwrite(fid,"\tb:  %b(%d)", b,b);
-      $fwrite(fid,"\tc:  %c(%d)", c,c);
+      $fwrite(fid,"\ta:  %b", a);
+      $fwrite(fid,"\tb:  %b", b);
       $fwrite(fid,"\n");
    end
 
@@ -58,5 +49,13 @@ module testbench ();
       end
    end
 
-   
+   // ADDITIONAL TEST CASES FOR OVERFLOW
+   always @(posedge clk) begin
+      if (a + b < a || a + b < b) begin
+         $display("Overflow occurred on addition: a = %b, a = %d, b = %b, b = %d", a, a, b, b);
+      end
+      if (b > a) begin
+         $display("Overflow occurred on subtraction: a = %b, a = %d, b = %b, b = %d", a, a, b, b);
+   end
+   end
 endmodule // testbench
