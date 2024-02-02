@@ -19,7 +19,7 @@ module testbench ();
       .A(A),
       .B(B),
       .sel(sel),
-      .q(Q),
+      .Q(Q),
       .overflow(overflow)
       );
    
@@ -35,13 +35,25 @@ module testbench ();
 
    // GENERATE CLOCK:
    initial forever #10 clk = ~clk;
-   
    // CREATE STIMULI:
    always @(posedge clk) begin
-      // put your assignments here
+      // Iterate through all possible values of A, B, and sel
+      for (A = -8; A <= 7; A = A + 1) begin
+         for (B = -8; B <= 7; B = B + 1) begin
+            for (sel = 0; sel <= 1; sel = sel + 1) begin
+               #10; // Wait for one clock cycle
+               
+               // Print the current test case
+               $write("Test case: A=%d, B=%d, sel=%d\n", A, B, sel);
+               
+               // Perform the assignment and wait for one clock cycle
+               // Assignments go here
+               
+               #10; // Wait for one clock cycle
+            end
+         end
+      end
    end
-
-   
 
    // WRITE OUTPUT TO CONSOLE:
    integer fid;
@@ -53,7 +65,7 @@ module testbench ();
       $write("\ta:  %d", A);
       $write("\tb:  %d", B);
       $write("\tq:  %d", Q);
-      $write("\tov: %b", overflow);
+      $write("\toverflow: %b", overflow);
       $write("\n");
       
       $fwrite(fid,"clk:  %d", clk_count);
@@ -61,14 +73,14 @@ module testbench ();
       $fwrite(fid,"\ta:  %d", A);
       $fwrite(fid,"\tb:  %d", B);
       $fwrite(fid,"\tq:  %d", Q);
-      $fwrite(fid,"\tov: %b", overflow);
+      $fwrite(fid,"\toverflow: %b", overflow);
       $fwrite(fid,"\n");
    end
 
    // DEFINE WHEN TO TERMINATE SIMULATION:
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      if (clk_count == 8) begin
+      if (clk_count == 2**10) begin
 	 $fclose(fid);
 	 $finish;
       end
