@@ -25,6 +25,7 @@ module testbench ();
      (
       .clk(clk),
       .rst(rst),
+      .rst_l(rst_l),
       .ready(ready),
       .start(start),
       .done(done)
@@ -34,6 +35,7 @@ module testbench ();
    race_observer finisher
      (
       .clk(clk),
+      .rst_l(rst_l),
       .rst(rst),
       .start(start),
       .done(done)
