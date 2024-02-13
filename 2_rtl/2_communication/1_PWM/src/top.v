@@ -11,7 +11,18 @@ module top (
 	    output reg 	AIN,
 	    output reg 	GAIN,
 	    output reg 	SHUTDOWN_L
+		/*output [15:0] LED,
+		output [3:0] an,
+		output [6:0] seg*/
 	 );
+
+	/*dim_leds DLED1 (
+		.sys_clk(clk),
+		.LED(LED),
+		.an(an),
+		.seg(seg)
+    );
+	*/
 
    wire 		rst_n;
    assign rst_n = ~rst;

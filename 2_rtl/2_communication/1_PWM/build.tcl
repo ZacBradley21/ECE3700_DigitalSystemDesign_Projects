@@ -1,6 +1,7 @@
 # Load sources
 read_verilog [ glob src/*.v ]
 read_xdc pwm_audio.xdc
+#read_xdc dim_leds.xdc
 
 # Run Synthesis
 
@@ -19,4 +20,4 @@ report_utilization -file post_route_utilization.rpt
 
 # Make bitstream
 write_bitstream -force pwm_audio.bit
-
+#write_bitstream -force dim_leds.bit
