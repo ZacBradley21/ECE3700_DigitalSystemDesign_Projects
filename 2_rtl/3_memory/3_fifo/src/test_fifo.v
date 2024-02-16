@@ -26,9 +26,9 @@ module testbench();
    
    //open file for writing
    integer fid;
-   initial fid = $fopen("fifo_test.txt", "w");
+   initial fid = $fopen("lifo_test.txt", "w");
    
-   fifo DUT(
+   stack DUT(
    .clk(clk),
 
    // Transmit Interface
@@ -65,7 +65,6 @@ module testbench();
 
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
-      why = 1;
       if (clk_count == 1)
 	$display("============== PUSH DATA IN ===============");
       //$fwrite(fid, "============== PUSH DATA IN ===============\n");
@@ -99,6 +98,8 @@ module testbench();
 	       rx_done = 1;
 	       $display("%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d",clk_count,
 			out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
+         //$display("%d out_data: %d",clk_count,
+			//DUT.buffer[DUT.front]);
           $fwrite(fid, "%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d\n",clk_count,
          out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
 	    end
