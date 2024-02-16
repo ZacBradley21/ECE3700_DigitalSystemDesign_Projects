@@ -11,21 +11,22 @@ module testbench();
    reg      clk;
 
    // Transmit Interface
-   reg             tx_rdy;
-   wire        tx_done;
-   reg [WIDTH-1:0] in_data;
+   reg               tx_rdy;
+   wire              tx_done;
+   reg [WIDTH-1:0]   in_data;
 
    // Receive Interface
-   wire             rx_rdy;
+   wire                 rx_rdy;
    reg                  rx_done;
-   wire [WIDTH-1:0] out_data;
+   wire [WIDTH-1:0]     out_data;
    
    // Indicators
    wire empty;
    wire full;
    
-
-	      
+   //open file for writing
+   integer fid;
+   initial fid = $fopen("fifo_test.txt", "w");
    
    fifo DUT(
    .clk(clk),
@@ -62,18 +63,20 @@ module testbench();
       
    end
 
-   
    always @(posedge clk) begin
       clk_count <= clk_count + 1;
+      why = 1;
       if (clk_count == 1)
 	$display("============== PUSH DATA IN ===============");
-      
+      //$fwrite(fid, "============== PUSH DATA IN ===============\n");
       if (write) begin
 	 if ((clk_count % 10) == 2) begin
 	    tx_rdy = 1;
 	    in_data = $random();
 	    $display("%d in_data: %d tx_rdy done:%b count:%d front:%d back:%d",clk_count,
 		     in_data,tx_done,DUT.count,DUT.front,DUT.back); 
+       $fwrite(fid, "%d in_data: %d tx_rdy done:%b count:%d front:%d back:%d\n",clk_count,
+		     in_data,tx_done,DUT.count,DUT.front,DUT.back);
 	 end
 	 if (tx_done) begin	 
 	 //   $write("%d tx_done incr:%b decr:%b",clk_count, DUT.incr, DUT.decr);
@@ -85,7 +88,9 @@ module testbench();
 	 if (full) begin
 	    write <= 0;
 	    $display("%d buffer full",clk_count);	    
+       //$fwrite(fid, "%d buffer full\n",clk_count);
 	    $display("============== PULL DATA OUT ===============");
+       //$fwrite(fid, "============== PULL DATA OUT ===============\n");
 	 end
       end // if (write)
       else begin
@@ -94,17 +99,23 @@ module testbench();
 	       rx_done = 1;
 	       $display("%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d",clk_count,
 			out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
+          $fwrite(fid, "%d out_data: %d rx_rdy:%b done count:%d front:%d back:%d\n",clk_count,
+         out_data,rx_rdy,DUT.count,DUT.front,DUT.back);
 	    end
 	 end
 	 if (!rx_rdy) begin	 
 //	    $display("%d rx_done incr:%b decr:%b rx_state:%d",clk_count, DUT.incr, DUT.decr,DUT.rx_state);
+//     $fwrite(fid, "%d rx_done incr:%b decr:%b rx_state:%d",clk_count, DUT.incr, DUT.decr,DUT.rx_state);
 //	    $display("%d buffer: %d %d %d %d %d", clk_count,DUT.buffer[0], DUT.buffer[1],
 //		     DUT.buffer[2], DUT.buffer[3], DUT.buffer[4]);
+//     $fwrite(fid, "%d buffer: %d %d %d %d %d", clk_count,DUT.buffer[0], DUT.buffer[1],
+//         DUT.buffer[2], DUT.buffer[3], DUT.buffer[4]);
 	    
 	    rx_done <= 0;
 	 end
 	 if (empty)
 	   $display("%d buffer empty",clk_count);
+      //$fwrite(fid, "%d buffer empty\n",clk_count);
       end // else: !if(write)
       
       if ((!write && empty) || (clk_count > 100))

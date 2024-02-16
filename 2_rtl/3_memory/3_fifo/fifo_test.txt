@@ -1,0 +1,14 @@
+============== PUSH DATA IN ==============
+          2 in_data: 129 tx_rdy done:0 count:0 front:0 back:0
+         12 in_data:   9 tx_rdy done:0 count:1 front:1 back:0
+         22 in_data:  99 tx_rdy done:0 count:2 front:2 back:0
+         32 in_data:  13 tx_rdy done:0 count:3 front:3 back:0
+         42 in_data: 141 tx_rdy done:0 count:4 front:4 back:0
+         44 buffer full
+============== PULL DATA OUT =============
+         52 out_data: 129 rx_rdy:1 done count:5 front:0 back:0
+         62 out_data:   9 rx_rdy:1 done count:4 front:0 back:1
+         72 out_data:  99 rx_rdy:1 done count:3 front:0 back:2
+         82 out_data:  13 rx_rdy:1 done count:2 front:0 back:3
+         92 out_data: 141 rx_rdy:1 done count:1 front:0 back:4
+         94 buffer empty
