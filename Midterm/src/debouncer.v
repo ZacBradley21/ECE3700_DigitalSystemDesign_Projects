@@ -9,7 +9,7 @@ module debouncer
    );
 
    reg [1:0]  state;
-   reg              clear;
+   reg        clear;
 
    wire       t; // tcounter timer alarm
    

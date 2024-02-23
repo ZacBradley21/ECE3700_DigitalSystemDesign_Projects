@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module testbench ();
+module debouncer_testbench ();
    
    // DECLARE SIGNALS
    reg clk;     
@@ -21,7 +21,7 @@ module testbench ();
    integer clk_count_d = 0; // delayed clock count   
 
    // DEVICE UNDER TEST
-   top DUT
+  debouncer DUT
   (
    .clk(clk),
    .btn(btn),
