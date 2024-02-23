@@ -2,18 +2,18 @@
 
 module keyboard_audio (
    //Inputs and outputs for pwm_audio and debouncer module
-	    input 	clk,
-	    input 	rst,
-       input   btn1,
-	    input [7:0] volume,
+	    input 	      clk,
+	    input 	      rst,
+       input         btn1,
+	    input [7:0]   volume,
        output reg 	led,
 	    output reg 	AIN,
 	    output reg 	GAIN,
 	    output reg 	SHUTDOWN_L,
 
    //Inputs and outputs for keypad module
-        input  [3:0]  row,
-        output [3:0]  col
+       input  [3:0]  row,
+       output [3:0]  col
 	 );
 
    //Instantiate wires, assign statments, and registers
@@ -21,7 +21,7 @@ module keyboard_audio (
    wire              rst_l;
    wire [15:0] 		keypad;
    wire 		         rst_n;
-   wire 		         sout;   
+   wire 		         sout; 
    assign rst_l =    ~rst;
    assign rst_n =    ~rst;
    reg               shutdown;
@@ -75,9 +75,9 @@ module keyboard_audio (
 //Always block to initialize values for the audio output and shutdown command   
    always @(posedge clk) begin
       if (!rst_n) begin
-	 GAIN       <= 1;
-	 SHUTDOWN_L <= 1;
-	 AIN        <= 0;	 
+	      GAIN       <= 1;
+	      SHUTDOWN_L <= 1;
+	      AIN        <= 0;	 
       end
    if (!shutdown && (keypad != 0)) begin
       AIN <= sout;
