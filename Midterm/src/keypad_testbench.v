@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module keypad_testbench ();
+module lekeypad_testbench ();
    
    // DECLARE SIGNALS
    reg  clk;

@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module keyboard_audio_testbench();
+module lekeyboard_audio_testbench();
 
    // Inputs
    reg clk;

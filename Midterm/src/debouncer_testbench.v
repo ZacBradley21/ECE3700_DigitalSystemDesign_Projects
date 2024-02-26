@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module debouncer_testbench ();
+module ledebouncer_testbench ();
    
    // DECLARE SIGNALS
    reg clk;     
