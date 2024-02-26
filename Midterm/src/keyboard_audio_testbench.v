@@ -1,62 +1,57 @@
-`timescale 1ns/1ps
+`timescale 1ns / 1ps
 
-//module keyboard_audio_testbench();
 module testbench();
 
-   // Inputs
-   reg clk;
-   reg rst;
-   reg btn1;
-   reg [7:0] volume;
-   reg [3:0] row;
+    reg clk;
+    reg rst;
+    reg btn1;
+    reg [3:0] row;
+    reg [7:0] volume;
+    wire [3:0] col;
+    wire led;
+    wire AIN;
+    wire GAIN;
+    wire SHUTDOWN_L;
 
-   // Outputs
-   wire [3:0] col;
-   wire led;
-   wire AIN;
-   wire GAIN;
-   wire SHUTDOWN_L;
+    // Instantiate the keyboard_audio module
+    keyboard_audio DUT (
+        .clk(clk),
+        .rst(rst),
+        .btn1(btn1),
+        .volume(volume),
+        .led(led),
+        .AIN(AIN),
+        .GAIN(GAIN),
+        .SHUTDOWN_L(SHUTDOWN_L),
+        .row(row),
+        .col(col)
+    );
 
-   // Instantiate the module under test
-   keyboard_audio DUT (
-      .clk(clk),
-      .rst(rst),
-      .btn1(btn1),
-      .volume(volume),
-      .led(led),
-      .AIN(AIN),
-      .GAIN(GAIN),
-      .SHUTDOWN_L(SHUTDOWN_L),
-      .row(row),
-      .col(col)
-   );
+       integer clk_count = 0;
 
-   // Clock generation
-   always #5 clk = ~clk;
-
-   // Initialize inputs
-   initial begin
-      clk = 0;
-      rst = 1;
-      btn1 = 0;
-      volume = 8'b00000000;
-      row = 4'b0000;
-
-      // Reset
-      #10 rst = 0;
-      #10 rst = 1;
-
-      // Simulate button press
-      #20 btn1 = 1;
-
-      // Simulate volume change
-      #30 volume = 8'b01010101;
-
-      // Simulate keypad input
-      #40 row = 4'b0010;
-
-      // Finish simulation
-      #50 $finish;
+      always @(posedge clk) begin
+      clk_count <= clk_count + 1;
+      
+      if (clk_count == 1000) begin
+     $finish;
+      end
    end
+
+    initial begin
+      //Initialize inputs
+        clk = 0;
+        rst = 1;
+        btn1 = 0;
+        volume = 8'b00000001;
+        row = 4'b1110;
+    end
+
+initial forever #10 clk = ~clk;
+
+    // Monitor outputs
+    initial begin
+            $monitor("At time %d, row = %b, col = %b, AIN = %b,  keys = %b", 
+            clk_count, row, DUT.kypd.col, AIN, DUT.keypad);
+    end
 
 endmodule
